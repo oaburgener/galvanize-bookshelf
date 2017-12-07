@@ -48,8 +48,8 @@ router.patch('/books/:id', (req,res,next) => {
 
 router.delete('/books/:id', (req,res,next) => {
   let id = req.params.id
-  return knex('books').where('books.id', id).del().first('title', 'author', 'genre', 'description', 'cover_url AS coverUrl', 'created_at AS createdAt', 'updated_at AS updatedAt')
-  .then((data) => res.status(200).send(data))
+  return knex('books').where('books.id', id).del().returning(['title', 'author', 'genre', 'description', 'cover_url AS coverUrl', 'created_at AS createdAt', 'updated_at AS updatedAt'])
+  .then((data) => res.status(200).send(data[0]))
 })
 
 
